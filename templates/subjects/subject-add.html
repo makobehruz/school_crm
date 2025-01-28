@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if subject %} Maktab CRM - Fan tahrirlash {% else %} Maktab CRM - Yangi fan yaratish {% endif %}{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>{% if subject %} Fan tahrirlash {% else %} Yangi fan yaratish {% endif %}</h1>
+        <form id="createSubjectForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Fan nomi:</label>
+                <input type="text" id="name" name="name" placeholder="Fan nomini kiriting" value="{{ subject.name }}" required>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn"><i class="fas fa-save"></i> Saqlash</button>
+                <a href="{% url 'subjects:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+            </div>
+        </form>
+    </main>
+{% endblock %}
+

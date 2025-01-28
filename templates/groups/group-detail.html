@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} Maktab CRM - Guruh ma'lumotlari {% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Guruh ma'lumotlari</h1>
+        <div class="group-details">
+            <div class="group-info">
+                <h2>Guruh {{ group.name }}</h2>
+                <p>ID: {{ group.id }}</p>
+                <p>O'quvchilar soni: 30</p>
+                <p>Sinf rahbari: {{ group.teacher }}</p>
+            </div>
+            <div class="group-students">
+                <h3>O'quvchilar ro'yxati</h3>
+                {% if students %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Ism</th>
+                                <th>Amallar</th>
+                            </tr>
+                        </thead>
+                        {% for student in students %}
+                            <tbody>
+                                <tr>
+                                    <td>{{ student.id }}</td>
+                                    <td>{{ student.full_name }}</td>
+                                    <td><a href="{{ student.get_detail_url }}" class="btn btn-info">Ko'rish</a></td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <h3 style="color: blue; text-align: center; margin-top: 10px;">There are no students in this group yet.</h3>
+                {% endif %}
+            </div>
+        </div>
+        <div class="actions">
+            <a href="{{ group.get_update_url }}" class="btn"><i class="fas fa-edit"></i> Tahrirlash</a>
+            <a href="{{ group.get_delete_url }}" class="btn btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
+            <a href="{% url 'groups:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+        </div>
+    </main>
+{% endblock %}
+

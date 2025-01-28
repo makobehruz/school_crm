@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+    <main>
+        <h1>O'quvchi ma'lumotlari</h1>
+        <div class="student-details">
+            <div class="student-info">
+                <img src="{{ student.image.url }}" style="width: 400px; height: 300px;" id="studentImage" class="student-image">
+                <h2 id="studentName">{{student.full_name }}</h2>
+                <p>ID: <span id="studentId">{{ student.id }}</span></p>
+                <p>Guruh: <span id="studentGroup">{{ student.group }}</span></p>
+                <p>Tug'ilgan sana: <span id="studentBirthDate"> {{ student.dob }}</span></p>
+                <p>Telefon: <span id="studentPhone">{{ student.phone }}</span></p>
+                <p>Manzil: <span id="studentAddress">{{ student.address }}</span></p>
+            </div>
+        </div>
+        <div class="actions">
+            <a href="{{ student.get_update_url }}" class="btn"><i class="fas fa-edit"></i> Tahrirlash</a>
+            <a href="{{ student.get_delete_url }}" id="deleteStudent" class="btn btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
+             <a href="{% url 'students:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+        </div>
+    </main>
+{% endblock %}

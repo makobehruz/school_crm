@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if group %} Maktab CRM - Guruh tahrirlash {% else %} Maktab CRM - Guruh yaratish {% endif %}{% endblock %}
+
+{% block content %}
+    <main>
+        <h1> {% if group %} Guruh Tahrirlash {% else %} Guruh yaratish {% endif %}</h1>
+        <form id="createGroupForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Guruh nomi:</label>
+                <input type="text" id="name" name="name" placeholder="Guruh nomini kiriting" value="{{ group.name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="teacher">Sinf rahbari:</label>
+                <select id="teacher" name="teacher" required>
+                    <option value="">Sinf rahbarini tanlang</option>
+                    {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.first_name }} {{ teacher.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="actions">
+                <button class="btn"><i class="fas fa-save"></i> Saqlash</button>
+                <a href="{% url 'groups:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+            </div>
+        </form>
+    </main>
+{% endblock %}
