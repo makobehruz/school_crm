@@ -7,7 +7,10 @@ from .models import Group
 
 def group_list(request):
     groups = Group.objects.all()
-    ctx = {'groups': groups}
+    ctx = {
+        'groups': groups,
+        'students_count': Student.objects.count(),
+    }
     return render(request, 'groups/groups-list.html', ctx)
 
 def group_create(request):
@@ -28,7 +31,12 @@ def group_create(request):
 def group_detail(request, pk):
     group = get_object_or_404(Group, pk=pk)
     students = Student.objects.filter(group=group)
-    ctx = {'group': group, 'students':  students}
+    students_count = students.count()
+    ctx = {
+        'group': group,
+        'students':  students,
+        'students_count': students_count,
+    }
     return render(request, 'groups/group-detail.html', ctx)
 
 def group_update(request, pk):

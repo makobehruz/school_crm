@@ -15,10 +15,17 @@ def home(request):
     }
     return render(request,'index.html', ctx)
 
+
 def subject_list(request):
     subjects = Subject.objects.all()
-    ctx = {'subjects': subjects}
-    return render(request,'subjects/subjects-list.html', ctx)
+    ctx = {
+        'subjects': subjects,
+        'teachers_count': Teacher.objects.count(),
+    }
+    for subject in subjects:
+        subject.teachers_count = Teacher.objects.filter(subject=subject).count()
+    return render(request, 'subjects/subjects-list.html', ctx)
+
 
 def subject_create(request):
     if request.method == 'POST':
@@ -33,9 +40,11 @@ def subject_create(request):
 def subject_detail(request, pk):
     subject = get_object_or_404(Subject, pk=pk)
     teachers = Teacher.objects.filter(subject=subject)
+    teachers_count = teachers.count()
     ctx = {
         'subject': subject,
         'teachers': teachers,
+        'teachers_count': teachers_count,
     }
     return render(request, 'subjects/subject-detail.html', ctx)
 
